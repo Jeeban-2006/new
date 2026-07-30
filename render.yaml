@@ -26,8 +26,9 @@ services:
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
-  - type: psql
-    name: clinic_db
+
+databases:
+  - name: clinic_db
     databaseName: clinic_db
     user: postgres
     plan: free
