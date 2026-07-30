@@ -1,4 +1,9 @@
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+let BASE_URL = 'http://localhost:8000';
+if (import.meta.env.VITE_API_URL) {
+  BASE_URL = import.meta.env.VITE_API_URL;
+} else if (import.meta.env.VITE_API_HOST) {
+  BASE_URL = `https://${import.meta.env.VITE_API_HOST}`;
+}
 
 function getToken() {
   return localStorage.getItem('clinic_token');

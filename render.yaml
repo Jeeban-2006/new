@@ -6,11 +6,11 @@ services:
     buildCommand: npm install && npm run build
     staticPublishPath: ./frontend/dist
     envVars:
-      - key: VITE_API_URL
+      - key: VITE_API_HOST
         fromService:
           type: web
           name: api
-          property: url
+          property: host
 
   - type: web
     name: api
@@ -30,5 +30,4 @@ services:
 databases:
   - name: clinic_db
     databaseName: clinic_db
-    user: postgres
     plan: free
