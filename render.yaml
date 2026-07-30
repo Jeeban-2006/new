@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: api
+          property: url
+
+  - type: web
+    name: api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: clinic_db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+  - type: psql
+    name: clinic_db
+    databaseName: clinic_db
+    user: postgres
+    plan: free
